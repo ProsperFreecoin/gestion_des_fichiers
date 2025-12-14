@@ -4,6 +4,7 @@
  */
 package gestion.fichier.cli;
 
+import gestion.fichier.metier.Fichier;
 import gestion.fichier.metier.Repertoire;
 
 /**
@@ -15,7 +16,11 @@ public class CmMKDIR extends Commande{
     
     @Override
     public void executer() {
-        Navigateur.getInstance().getRepertoireCourant().ajouterRepertoire(nom);
+        if(!Navigateur.getInstance().getRepertoireCourant().existeRepertoire(nom)){
+            Navigateur.getInstance().getRepertoireCourant().ajouterRepertoire(nom);
+        }else{
+            System.out.println("Repertoire existant");
+        }
     }
 
     @Override

@@ -32,6 +32,9 @@ public class ParseurCommande {
             case "TOUCH" :
                commande = new CmTouch();
                break;
+            case "CD" :
+               commande = new CmCD();
+               break;
             default : 
                commande = new CmInconnue();
         }

@@ -4,6 +4,8 @@
  */
 package gestion.fichier.metier;
 
+import java.io.FileNotFoundException;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
  * @author freecoin
  */
 public class Repertoire extends Fichier{
+    @Serial
+    private static final long serialVersionUID = -897856973823710492L;
     private List<Fichier> fichiers = new ArrayList<>();
     
     public Repertoire(){
@@ -48,5 +52,41 @@ public class Repertoire extends Fichier{
     public void setFichiers(List<Fichier> fichiers) {
         this.fichiers = fichiers;
     }
+
+    @Override
+    public boolean estRepertoire() {
+        return true;
+    }
     
+    public boolean existeRepertoire(String nom){
+       for(Fichier fichier : fichiers){
+           if(fichier.getNom().equals(nom) && estRepertoire()){
+               return true;
+           }
+       } 
+       return false;
+    }
+    
+    public boolean existeFichier(String nom){
+         for(Fichier fichier : fichiers){
+           if(fichier.getNom().equals(nom) && !estRepertoire()){
+               return true;
+           }
+       } 
+       return false;
+    }
+    
+    public Repertoire getRepertoire(String nom) throws FileNotFoundException{
+        if(nom == null){
+            return null;
+        }
+        
+        
+        for(Fichier fichier : fichiers){
+           if(fichier.getNom().equals(nom) && fichier.estRepertoire()){
+               return (Repertoire)fichier;
+           }
+        } 
+        throw new FileNotFoundException("Repertoire '" + nom + "' nom trouvé");
+    }
 }

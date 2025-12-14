@@ -9,6 +9,8 @@ package gestion.fichier.metier;
  * @author freecoin
  */
 public class FichierSimple extends Fichier{
+    @java.io.Serial
+    private static final long serialVersionUID = -897856973823710492L;
     private String donnee;
 
     public FichierSimple(){
@@ -21,6 +23,11 @@ public class FichierSimple extends Fichier{
     @Override
     public int getTaille() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean estRepertoire() {
+        return false;
     }
     
 }

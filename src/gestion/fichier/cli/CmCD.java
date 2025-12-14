@@ -4,27 +4,31 @@
  */
 package gestion.fichier.cli;
 
+import gestion.fichier.metier.Fichier;
 import gestion.fichier.metier.Repertoire;
+import java.io.FileNotFoundException;
 
 /**
  *
  * @author freecoin
  */
-public class CmTouch extends Commande{
+public class CmCD extends Commande{
     private String nom;
     
     @Override
     public void executer() {
-        if(!Navigateur.getInstance().getRepertoireCourant().existeFichier(nom)){
-            Navigateur.getInstance().getRepertoireCourant().ajouterFichierSimple(nom);
-        }else{
-            System.out.println("Fichier existant");
+        try {
+            Navigateur.getInstance().changerRepertoire(nom);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
         }
+            
     }
 
     @Override
     public void setParametres(String[] parametres) {
         this.nom = parametres[0];
+//        nveauRep = (Repertoire)Navigateur.getInstance().getRepertoireCourant();
     }
     
 }

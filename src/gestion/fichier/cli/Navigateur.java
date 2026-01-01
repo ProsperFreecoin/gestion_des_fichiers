@@ -51,11 +51,15 @@ public class Navigateur {
     public void changerRepertoire(String[] nomsRepertoire)throws FileNotFoundException{
         
         for (String nomRepertoire : nomsRepertoire) {
-           if(nomRepertoire.equals("..") && this.repertoireCourant.getRepertoireParent() !=null){
-            this.repertoireCourant = this.repertoireCourant.getRepertoireParent();
-            continue;
-        }
+          if(nomRepertoire.equals(".") && this.repertoireCourant.getRepertoireParent() !=null){
+              return;
+          } 
+            if(nomRepertoire.equals("..") && this.repertoireCourant.getRepertoireParent() !=null){
+                this.repertoireCourant = this.repertoireCourant.getRepertoireParent();
+                continue;
+            }
            this.repertoireCourant = this.repertoireCourant.getRepertoire(nomRepertoire); 
         }
     }
+    
 }

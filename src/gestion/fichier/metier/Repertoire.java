@@ -4,6 +4,7 @@
  */
 package gestion.fichier.metier;
 
+import gestion.fichier.cli.Navigateur;
 import java.io.FileNotFoundException;
 import java.io.Serial;
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ public class Repertoire extends Fichier{
     }
     public Repertoire(String nom ,Repertoire repertoireParent){
         super(nom, repertoireParent);
+    }
+    
+    public Repertoire(Repertoire rep){
+        super(rep);
     }
     
     public void ajouterRepertoire(String nom){
@@ -88,5 +93,70 @@ public class Repertoire extends Fichier{
            }
         } 
         throw new FileNotFoundException("Repertoire '" + nom + "' nom trouvé");
+    }
+    
+    public FichierSimple getFichierSimple(String nom) throws FileNotFoundException{
+        if(nom == null){
+            return null;
+        }
+        
+        
+        for(Fichier fichier : fichiers){
+           if(fichier.getNom().equals(nom) && !fichier.estRepertoire()){
+               return (FichierSimple)fichier;
+           }
+        } 
+        throw new FileNotFoundException("Fichier Simple '" + nom + "' nom trouvé");
+    }
+    
+    public void copier(Repertoire r){
+        for(Fichier fic : fichiers){
+            if(fic.getNom().equals(r.getNom()) && r.estRepertoire()){
+                    //Je conserve la valeur de ce fichier en un repertoire
+                    r = (Repertoire)fic;
+            }  
+        }
+    }
+    
+    public void copier(FichierSimple fi){
+        for(Fichier fic : fichiers){
+            if(fic.getNom().equals(fi.getNom()) && !fi.estRepertoire()){
+                    fi = (FichierSimple)fic;
+            }
+        }
+    }
+    
+    public void move(Repertoire r){
+        for(Fichier fic : fichiers){
+            if(fic.getNom().equals(r.getNom()) && r.estRepertoire()){
+                r = (Repertoire)fic;
+            }
+        }
+    }
+    
+    public void supprimer(Repertoire rep){ 
+      
+    // On retire le répertoire de la liste des fichiers du dossier actuel
+    // On utilise removeIf pour éviter les erreurs lors du parcours de la liste des Fichiers 
+        boolean estSupprime = fichiers.removeIf(f -> 
+            f.getNom().equals(rep.getNom()));
+
+    // Gestion de la navigation via le Singleton
+        if (estSupprime) {
+        
+             // Si l'utilisateur a supprimé le dossier dans lequel il se trouvait :
+            if (Navigateur.getInstance().getRepertoireCourant().equals(rep)) {
+            // On le fait remonter automatiquement au répertoire parent (this)
+                Navigateur.getInstance().setRepertoireCourant(this); 
+            }
+        }
+    }
+ 
+    public void supprimer(FichierSimple fi){ 
+      
+    // On retire le fichier simple de la liste des fichiers du dossier actuel
+    // On utilise removeIf pour éviter les erreurs lors du parcours de la liste des Fichiers 
+        fichiers.removeIf(f -> 
+            f.getNom().equals(fi.getNom()));
     }
 }

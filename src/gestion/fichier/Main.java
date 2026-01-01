@@ -43,7 +43,8 @@ public class Main {
             String strCmde = clavier.nextLine();
             Commande commande = parseur.parser(strCmde);
             commande.executer();
-        }    
+        }   
+        
     }
     
    

@@ -16,8 +16,8 @@ public class CmMKDIR extends Commande{
     
     @Override
     public void executer() {
-        if(!Navigateur.getInstance().getRepertoireCourant().existeRepertoire(nom)){
-            Navigateur.getInstance().getRepertoireCourant().ajouterRepertoire(nom);
+        if(!Navigateur.getInstance().getRepertoireCourant().existeRepertoire(nom) && !Navigateur.getInstance().getRepertoireCourant().existeFichier(nom) ){
+            Navigateur.getInstance().getRepertoireCourant().ajouterRepertoire(nom);      
         }else{
             System.out.println("Repertoire existant");
         }

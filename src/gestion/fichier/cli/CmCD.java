@@ -18,7 +18,13 @@ public class CmCD extends Commande{
     @Override
     public void executer() {
         try {
-            Navigateur.getInstance().changerRepertoire(nom);
+            //Rester dans le meme rep si nom est null
+            if(nom == null || nom.isEmpty()){
+                Navigateur.getInstance().setRepertoireCourant(Fichier.getRoot());
+            }else{
+                 Navigateur.getInstance().changerRepertoire(nom);
+            }
+           
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -27,6 +33,10 @@ public class CmCD extends Commande{
 
     @Override
     public void setParametres(String[] parametres) {
+        //Si le parametre est null alors on retourne à la racine
+        if(parametres == null || parametres.length ==0){
+            return;
+        }
         this.nom = parametres[0];
 //        nveauRep = (Repertoire)Navigateur.getInstance().getRepertoireCourant();
     }

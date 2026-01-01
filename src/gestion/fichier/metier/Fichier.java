@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  */
 public abstract class Fichier implements Serializable{
     
-    public final static String chemin = "/home/freecoin/Documents/serialisation/gestion_fichier.ser";
+    public final static String chemin = "C:\\Users\\USER\\Downloads\\serial\\ert.ser";
     private static Repertoire root = new Repertoire("",null);
     private LocalDateTime dateCreation;
     private String nom;
@@ -39,6 +39,12 @@ public abstract class Fichier implements Serializable{
         if(repertoireParent != null){
            this.repertoireParent.getFichiers().add(this); 
         }
+    }
+    
+    public Fichier(Fichier fichier){
+        this();
+        this.nom = fichier.nom;
+        this.repertoireParent = fichier.repertoireParent;
     }
     
      public static void sauvegarder() throws Exception{
@@ -82,5 +88,9 @@ public abstract class Fichier implements Serializable{
 
     public Repertoire getRepertoireParent() {
         return repertoireParent;
+    }
+    
+    public void setRepertoireParent(Repertoire rep) {
+        this.repertoireParent = rep;
     }
 }

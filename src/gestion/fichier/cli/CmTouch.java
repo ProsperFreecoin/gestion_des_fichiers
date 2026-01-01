@@ -15,7 +15,7 @@ public class CmTouch extends Commande{
     
     @Override
     public void executer() {
-        if(!Navigateur.getInstance().getRepertoireCourant().existeFichier(nom)){
+        if(!Navigateur.getInstance().getRepertoireCourant().existeFichier(nom) && !Navigateur.getInstance().getRepertoireCourant().existeRepertoire(nom)){
             Navigateur.getInstance().getRepertoireCourant().ajouterFichierSimple(nom);
         }else{
             System.out.println("Fichier existant");
